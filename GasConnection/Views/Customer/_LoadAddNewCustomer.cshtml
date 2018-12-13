@@ -1,0 +1,207 @@
+﻿@model Gas.Models.CustomerModel
+@{
+    ViewBag.Title = "LoadAddNewCustomer";
+}
+
+<style type="text/css">
+    .errmsg {
+        color: red;
+    }
+</style>
+<script>
+       $(document).ready(function () {
+
+           $('#Aadhar').on('keypress change', function (e) {
+               if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
+                   //display error message
+                   $("#errmsg").html("Digits Only").show().fadeOut(2750);
+                   return false;
+               }
+
+               $(this).val(function (index, value) {
+                   return value.replace(/\W/gi, '').replace(/(.{4})/g, '$1 ');
+               });
+           });
+
+           $('#Aadhar').focusout(function () {
+               aadhar = $(this).val();
+               if (aadhar.length != 15) {
+                   $("#AadharError").html("Aadhar number not in correct format.").show().fadeOut(2750);
+                   $('#Aadhar').val('');
+                   e.preventDefault();
+               }
+           });
+
+
+           $('#MobileNumber').focusout(function () {
+                   phone = $(this).val();
+                   phone = phone.replace(/[^0-9]/g, '');
+                   if (phone.length != 10) {
+                       $("#MobError").html("Phone number must be 10 digits.").show().fadeOut(2750);
+                       $('#MobileNumber').val('');
+                       e.preventDefault();
+                   }
+           });
+
+
+           $('#DOB').datepicker({
+               dateFormat: "dd/M/yy",
+               changeMonth: true,
+               changeYear: true,
+               yearRange: "-60:+0"
+           });
+
+
+           $('.numbval').on('keypress change', function (e) {
+               if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
+                   return false;
+               }
+
+           });
+
+
+           $('#FormID').submit(function () {
+               if($('#FirstName').val()=="" ||$('#LastName').val()=="" ||$('#Gender').val()=="" ||$('#DOB').val()=="" ||$('#Aadhar').val()=="" ||
+                   $('#MobileNumber').val()=="" ||$('#Street').val()=="" ||$('#City').val()=="" ||$('#State').val()=="" ||$('#PostCode').val()=="")
+               {
+                   $("#ErrorFooter").html("Required Fields are missing").show().fadeOut(2750);
+                   return false;
+               }
+           });
+
+
+       });
+</script>
+<div class="card card-outline-primary" style="width:100%;">
+    @using (Html.BeginForm("AddNewCustomer", "Customer", FormMethod.Post, new { id = "FormID" }))
+    {
+
+
+        <div class="card-header">
+            <h4 class="m-b-0 text-white">Client Information</h4>
+        </div>
+        <div class="card-body">
+            <form action="#">
+                <div class="form-body">
+                    <h3 class="card-title m-t-15">Person Info</h3>
+                    <hr>
+                    <div class="row p-t-20">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label">First Name</label>
+                                @Html.EditorFor(s => s.FirstName, new { htmlAttributes = new { @class = "form-control", placeholder = "First Name" } })
+                            </div>
+                        </div>
+                        <!--/span-->
+                        <div class="col-md-6">
+                            <div class="form-group has-danger">
+                                <label class="control-label">Last Name</label>
+                                @Html.EditorFor(s => s.LastName, new { htmlAttributes = new { @class = "form-control", placeholder = "Last Name" } })
+                            </div>
+                        </div>
+                        <!--/span-->
+                    </div>
+                    <!--/row-->
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group has-success">
+                                <label class="control-label">Gender</label>
+
+                                @Html.DropDownListFor(s => s.Gender, new SelectList(new List<Object> {
+                                                                                        new {value="Male",text="Male"},
+                                                                                        new {value="Female",text="Female"},
+                                                                                        }, "value", "text", 2), new { @class = "form-control" })
+
+                                <small class="form-control-feedback"> Select your gender </small>
+                            </div>
+                        </div>
+                        <!--/span-->
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label">Date of Birth</label>
+                                @Html.EditorFor(s => s.DOB, new { htmlAttributes = new { @class = "form-control", placeholder = "dd/mm/yyyy" } })
+                            </div>
+                        </div>
+                        <!--/span-->
+                    </div>
+                    <!--/row-->
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label">Aadhar</label>
+
+                                @Html.EditorFor(s => s.Aadhar, new { htmlAttributes = new { @class = "form-control", placeholder = "Aadhar Number" } })
+                                <span id="AadharError" class="errmsg"></span>
+                            </div>
+                        </div>
+                        <!--/span-->
+                        <!--/span-->
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label">Mobile Number</label>
+                                @Html.EditorFor(s => s.MobileNumber, new { htmlAttributes = new { @class = "form-control numbval", placeholder = "Mobile Number" } })
+                                <span id="MobError" class="errmsg"></span>
+                            </div>
+                        </div>
+                        <!--/span-->
+                        <!--/span-->
+                    </div>
+                    <!--/row-->
+                    <h3 class="box-title m-t-40">Address</h3>
+                    <hr>
+                    <div class="row">
+                        <div class="col-md-12 ">
+                            <div class="form-group">
+                                <label>Street</label>
+                                @Html.EditorFor(s => s.Street, new { htmlAttributes = new { @class = "form-control" } })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>City</label>
+                                @Html.EditorFor(s => s.City, new { htmlAttributes = new { @class = "form-control" } })
+                            </div>
+                        </div>
+                        <!--/span-->
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>State</label>
+                                @Html.EditorFor(s => s.State, new { htmlAttributes = new { @class = "form-control" } })
+                            </div>
+                        </div>
+                        <!--/span-->
+                    </div>
+                    <!--/row-->
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Post Code</label>
+                                @Html.EditorFor(s => s.PostCode, new { htmlAttributes = new { @class = "form-control numbval" } })
+                            </div>
+                        </div>
+                        <!--/span-->
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Country</label>
+                                <input type="text" class="form-control" value="India" readonly="readonly">
+                            </div>
+                        </div>
+                        <!--/span-->
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" id="btnSubmit" class="btn btn-success"> <i class="fa fa-check"></i> Save</button>
+                    <button type="button" class="btn btn-inverse">Cancel</button>
+                    <span id="ErrorFooter" class="errmsg"></span>
+
+                </div>
+
+            </form>
+        </div>
+
+    }
+</div>
+

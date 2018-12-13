@@ -1,0 +1,146 @@
+﻿@model List<Gas.Models.CustomerModel>
+@{
+    ViewBag.Title = "GetCustomers";
+}
+<script>
+    $(document).ready(function () {
+        @*$('#AddNewBtn').click(function () {
+            $.ajax({
+                url: '@Url.Action("LoadAddNewCustomer","Customer")',
+                datatype: "html",
+                type: "POST",
+                contentType: "application/html; charset=utf-8",
+                success: function (result) {
+                    $("#AddNewCustomer").html(result);
+                    $("#AddNewCustomer").dialog({
+                        autoOpen: true,
+                        position: { my: "center", of: window },
+                        width: 1100,
+                        resizable: false,
+                        title: 'Add User Form',
+                        modal: true
+                    });
+                },
+                error: function (xhr) {
+                    alert("error");
+                }
+            });
+        });*@
+
+        $("#AddNewBtn").on("click", function (e) {
+            var url = '@Url.Action("LoadAddNewCustomer", "Customer")';
+            $("#AddNewCustomer").dialog({
+                title: 'Add new customer',
+                autoOpen: false,
+                resizable: false,
+                height: 900,
+                width: 1250,
+                show: { effect: 'drop', direction: "up" },
+                modal: true,
+                draggable: true,
+                open: function (event, ui) {
+                    $(this).load(url);
+
+                },
+                close: function (event, ui) {
+                    $(this).dialog('close');
+                }
+            });
+
+            $("#AddNewCustomer").dialog('open');
+            return false;
+        });
+
+        $('#AddCusBtn').click(function (e) {
+            location.href = '@Url.Content("~/Customer/LoadAddNewCustomerView")';
+        });
+
+    });
+</script>
+  <div class="container-fluid">
+
+      <div class="preloader">
+          <svg class="circular" viewBox="25 25 50 50">
+              <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10" />
+          </svg>
+      </div>
+      <div class="row">
+          <div class="col-12">
+              <div class="card">
+                  <div class="card-body">
+                      <h4 class="card-title">Data Export</h4>
+                      <h6 class="card-subtitle">Export data to Copy, CSV, Excel, PDF & Print</h6>
+                      <div class="table-responsive m-t-40">
+                          <table id="example23" class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" width="100%">
+                              <thead>
+                                  <tr>
+                                      <th>Customer Name</th>
+                                      <th>Address</th>
+                                      <th>Aadhar</th>
+                                      <th>Mobile</th>
+                                      
+
+                                  </tr>
+                              </thead>
+                              <tfoot>
+                                  <tr>
+                                      <th>Customer Name</th>
+                                      <th>Address</th>
+                                      <th>Aadhar</th>
+                                      <th>Mobile</th>
+                                      
+                                  </tr>
+                              </tfoot>
+                              <tbody>
+                                  @foreach (var item in Model)
+                                  {
+                                      <tr>
+                                          <td>@item.FirstName @item.LastName </td>
+                                          <td>@item.Street</td>
+                                          <td>@item.Aadhar</td>
+                                          <td>@item.MobileNumber</td>
+                                          
+                                      </tr>
+                                  }
+                              </tbody>
+                          </table>
+                      </div>
+                      <div class="row" style="padding-top:10px;">
+                          <br />
+                          <button type="button" id="AddNewBtn" class="btn btn-primary m-b-10 m-l-5">Add New Customer</button>
+                          <button type="button" id="AddCusBtn" class="btn btn-primary m-b-10 m-l-5">Add New Customer</button>
+                      </div>   
+                  </div>
+              </div>
+          </div>
+      </div>
+      
+  </div>
+
+   <div id="AddNewCustomer" style="display: none"></div>
+
+
+    <!-- All Jquery -->
+    <script src="~/ElaAdmin-master/js/lib/jquery/jquery.min.js"></script>
+    <!-- Bootstrap tether Core JavaScript -->
+    <script src="~/ElaAdmin-master/js/lib/bootstrap/js/popper.min.js"></script>
+    <script src="~/ElaAdmin-master/js/lib/bootstrap/js/bootstrap.min.js"></script>
+    <!-- slimscrollbar scrollbar JavaScript -->
+    <script src="~/ElaAdmin-master/js/jquery.slimscroll.js"></script>
+    <!--Menu sidebar -->
+    <script src="~/ElaAdmin-master/js/sidebarmenu.js"></script>
+    <!--stickey kit -->
+    <script src="~/ElaAdmin-master/js/lib/sticky-kit-master/dist/sticky-kit.min.js"></script>
+    <!--Custom JavaScript -->
+    <script src="~/ElaAdmin-master/js/custom.min.js"></script>
+
+
+    <script src="~/ElaAdmin-master/js/lib/datatables/datatables.min.js"></script>
+    <script src="~/ElaAdmin-master/js/lib/datatables/cdn.datatables.net/buttons/1.2.2/js/dataTables.buttons.min.js"></script>
+    <script src="~/ElaAdmin-master/js/lib/datatables/cdn.datatables.net/buttons/1.2.2/js/buttons.flash.min.js"></script>
+    <script src="~/ElaAdmin-master/js/lib/datatables/cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
+    <script src="~/ElaAdmin-master/js/lib/datatables/cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js"></script>
+    <script src="~/ElaAdmin-master/js/lib/datatables/cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js"></script>
+    <script src="~/ElaAdmin-master/js/lib/datatables/cdn.datatables.net/buttons/1.2.2/js/buttons.html5.min.js"></script>
+    <script src="~/ElaAdmin-master/js/lib/datatables/cdn.datatables.net/buttons/1.2.2/js/buttons.print.min.js"></script>
+    <script src="~/ElaAdmin-master/js/lib/datatables/datatables-init.js"></script>
