@@ -35,7 +35,7 @@ namespace Gas.Data.DbLogic
                     _dbContext.Customers.Add(cust);
                     _dbContext.SaveChanges();
 
-                    //this application is in git
+                    //this application is in git  remote
 
                     SqlParameter[] para = new SqlParameter[]
                     {
