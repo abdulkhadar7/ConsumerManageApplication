@@ -48,6 +48,8 @@ namespace GasConnection.Controllers
         [HttpGet]
         public ActionResult LoadAddNewCustomerView()
         {
+            _customerService = new CustomerService();
+            ViewBag.ConnectionAmount = _customerService.GetConnectionAmount();
             return View("LoadAddNewCustomer");
         }
     }

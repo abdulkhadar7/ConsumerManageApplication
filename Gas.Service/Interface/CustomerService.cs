@@ -31,5 +31,19 @@ namespace Gas.Service.Interface
                 throw ex;
             }
         }
+
+        public int GetConnectionAmount()
+        {
+            try
+            {
+                customerEntity = new CustomerEntity();
+                return customerEntity.GetConnectionAmount();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }

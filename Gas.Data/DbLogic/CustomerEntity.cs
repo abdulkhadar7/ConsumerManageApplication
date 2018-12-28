@@ -80,5 +80,22 @@ namespace Gas.Data.DbLogic
                 throw ex;
             }
         }
+
+        public int GetConnectionAmount()
+        {
+            try
+            {
+                using (_dbContext=new GasEntity() )
+                {
+                    var amount = Convert.ToInt32(_dbContext.SettingsMasters.Where(s => s.SettingsName == "TotalConnectionAmount" && s.IsActive == true).Select(s => s.SettingsValue).FirstOrDefault());
+                    return amount;
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+        }
     }
 }

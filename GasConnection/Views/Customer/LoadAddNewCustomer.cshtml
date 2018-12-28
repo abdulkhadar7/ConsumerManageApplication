@@ -11,78 +11,98 @@
     }
 </style>
 <script>
-       $(document).ready(function () {
+    $(document).ready(function () {
+        var ConnectionAmount = parseInt(@ViewBag.ConnectionAmount);
 
-           $('#customerModel_Aadhar').on('keypress change', function (e) {
-               if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
-                   //display error message
-                   $("#errmsg").html("Digits Only").show().fadeOut(2750);
-                   return false;
-               }
+        $('#customerModel_Aadhar').on('keypress change', function (e) {
+            if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
+                //display error message
+                $("#errmsg").html("Digits Only").show().fadeOut(2750);
+                return false;
+            }
 
-               $(this).val(function (index, value) {
-                   return value.replace(/\W/gi, '').replace(/(.{4})/g, '$1 ');
-               });
-           });
+            $(this).val(function (index, value) {
+                return value.replace(/\W/gi, '').replace(/(.{4})/g, '$1 ');
+            });
+        });
 
-           $('#customerModel_Aadhar').focusout(function () {
-               aadhar = $(this).val();
-               if (aadhar.length != 15) {
-                   $("#AadharError").html("Aadhar number not in correct format.").show().fadeOut(2750);
-                   $('#Aadhar').val('');
-                   e.preventDefault();
-               }
-           });
-
-
-           $('#customerModel_MobileNumber').focusout(function () {
-                   phone = $(this).val();
-                   phone = phone.replace(/[^0-9]/g, '');
-                   if (phone.length != 10) {
-                       $("#MobError").html("Phone number must be 10 digits.").show().fadeOut(2750);
-                       $('#MobileNumber').val('');
-                       e.preventDefault();
-                   }
-           });
+        $('#customerModel_Aadhar').focusout(function () {
+            aadhar = $(this).val();
+            if (aadhar.length != 15) {
+                $("#AadharError").html("Aadhar number not in correct format.").show().fadeOut(2750);
+                $('#customerModel_Aadhar').val('');
+                e.preventDefault();
+            }
+        });
 
 
-           $('#customerModel_DOB').datepicker({
-               dateFormat: "dd/M/yy",
-               changeMonth: true,
-               changeYear: true,
-               yearRange: "-100:+0"
-           });
+        $('#customerModel_MobileNumber').focusout(function () {
+            phone = $(this).val();
+            phone = phone.replace(/[^0-9]/g, '');
+            if (phone.length != 10) {
+                $("#MobError").html("Phone number must be 10 digits.").show().fadeOut(2750);
+                $('#customerModel_MobileNumber').val('');
+                e.preventDefault();
+            }
+        });
 
+
+        $('#customerModel_DOB').datepicker({
+            dateFormat: "dd/M/yy",
+            changeMonth: true,
+            changeYear: true,
+            yearRange: "-100:+0"
+        });
+
+
+        $('#customerModel_CreatedOn').datepicker({
+            dateFormat: "dd/M/yy",
+            changeMonth: true,
+            changeYear: true,
+            yearRange: "-100:+0"
+        });
+
+        $('.numbval').on('keypress change', function (e) {
+            if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
+                return false;
+            }
+
+        });
+
+
+        $('#FormID').submit(function () {
+            if ($('#customerModel_FirstName').val() == "" || $('#customerModel_LastName').val() == "" || $('#customerModel_Gender').val() == "" || $('#customerModel_DOB').val() == "" || $('#customerModel_Aadhar').val() == "" ||
+                $('#customerModel_MobileNumber').val() == "" || $('#customerModel_Street').val() == "" || $('#customerModel_City').val() == "" || $('#customerModel_State').val() == "" || $('#customerModel_PostCode').val() == "") {
+                $("#ErrorFooter").html("Required Fields are missing").show().fadeOut(2750);
+                return false;
+            }
+        });
+
+        $('#btnCancel').click(function (e) {
+            location.href = '@Url.Content("~/Customer/GetCustomers/")';
+        });
+
+       
+        $('#payModel_AdvanceAmount').focusout(function () {
+            var advanceAmount = $(this).val();
+            if ((parseInt(ConnectionAmount) - parseInt($('#payModel_AdvanceAmount').val())) > 0)
+            {
+                var instaAmount = ((parseInt(ConnectionAmount) - parseInt($('#payModel_AdvanceAmount').val())) / 3).toFixed();
+                $('#payModel_Installment2').val(instaAmount);
+                $('#payModel_Installment3').val(instaAmount);
+                $('#payModel_Installment1').val(instaAmount);
+            }
+            else
+            {
+                $('#payModel_Installment2').val(0);
+                $('#payModel_Installment3').val(0);
+                $('#payModel_Installment1').val(0);
+            }
            
-           $('#customerModel_CreatedOn').datepicker({
-               dateFormat: "dd/M/yy",
-               changeMonth: true,
-               changeYear: true,
-               yearRange: "-100:+0"
-           });
+           
+        });
 
-           $('.numbval').on('keypress change', function (e) {
-               if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
-                   return false;
-               }
-
-           });
-
-
-           $('#FormID').submit(function () {
-               if ($('#customerModel_FirstName').val() == "" || $('#customerModel_LastName').val() == "" || $('#customerModel_Gender').val() == "" || $('#customerModel_DOB').val() == "" || $('#customerModel_Aadhar').val() == "" ||
-                   $('#customerModel_MobileNumber').val() == "" || $('#customerModel_Street').val() == "" || $('#customerModel_City').val() == "" || $('#customerModel_State').val() == "" || $('#customerModel_PostCode').val() == "")
-               {
-                   $("#ErrorFooter").html("Required Fields are missing").show().fadeOut(2750);
-                   return false;
-               }
-           });
-
-           $('#btnCancel').click(function (e) {
-               location.href = '@Url.Content("~/Customer/GetCustomers/")';
-           });
-
-       });
+    });
 </script>
 <div class="card card-outline-primary" style="width:100%;">
     @using (Html.BeginForm("AddNewCustomer", "Customer", FormMethod.Post, new { id = "FormID" }))

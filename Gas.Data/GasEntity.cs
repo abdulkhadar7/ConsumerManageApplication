@@ -17,6 +17,7 @@ namespace Gas.Data
         public virtual DbSet<MessageTemplate> MessageTemplates { get; set; }
         public virtual DbSet<Payment> Payments { get; set; }
         public virtual DbSet<PaymentDetail> PaymentDetails { get; set; }
+        public virtual DbSet<SettingsMaster> SettingsMasters { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
