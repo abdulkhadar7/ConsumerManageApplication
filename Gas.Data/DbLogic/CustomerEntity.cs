@@ -57,7 +57,7 @@ namespace Gas.Data.DbLogic
             
         }
 
-        public List<CustomerModel> GetCustomers()
+        public List<CustomerModel> GetCustomers(CustomerSearchModel searchModel)
         {
             try
             {
@@ -65,12 +65,12 @@ namespace Gas.Data.DbLogic
                 {
                     SqlParameter[] para = new SqlParameter[]
                     {
-                        new SqlParameter {ParameterName="@firstName",Value=DBNull.Value },
-                        new SqlParameter {ParameterName="@lastName",Value=DBNull.Value },
-                        new SqlParameter {ParameterName="@aadharNumber",Value=DBNull.Value },
-                        new SqlParameter {ParameterName="@mobileNumber",Value=DBNull.Value }
+                        new SqlParameter {ParameterName="@CustomerName",Value=DBNull.Value },
+                        new SqlParameter {ParameterName="@ConsumerNumber",Value=DBNull.Value },
+                        new SqlParameter {ParameterName="@SubmitDate",Value=DBNull.Value },
+                        new SqlParameter {ParameterName="@Aadhar",Value=DBNull.Value }
                     };
-                    List<CustomerModel> custList = _dbContext.Database.SqlQuery<CustomerModel>("exec GetCustomerList @firstName,@lastName,@aadharNumber,@mobileNumber",para).ToList();
+                    List<CustomerModel> custList = _dbContext.Database.SqlQuery<CustomerModel>("exec GetCustomerList @CustomerName,@ConsumerNumber,@SubmitDate,@Aadhar", para).ToList();
                     return custList;
                 }
             }
