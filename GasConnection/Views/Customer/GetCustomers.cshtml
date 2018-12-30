@@ -4,30 +4,8 @@
 }
 <script>
     $(document).ready(function () {
-        @*$('#AddNewBtn').click(function () {
-            $.ajax({
-                url: '@Url.Action("LoadAddNewCustomer","Customer")',
-                datatype: "html",
-                type: "POST",
-                contentType: "application/html; charset=utf-8",
-                success: function (result) {
-                    $("#AddNewCustomer").html(result);
-                    $("#AddNewCustomer").dialog({
-                        autoOpen: true,
-                        position: { my: "center", of: window },
-                        width: 1100,
-                        resizable: false,
-                        title: 'Add User Form',
-                        modal: true
-                    });
-                },
-                error: function (xhr) {
-                    alert("error");
-                }
-            });
-        });*@
-
-        $("#AddNewBtn").on("click", function (e) {
+       
+        @*$("#AddNewBtn").on("click", function (e) {
             var url = '@Url.Action("LoadAddNewCustomer", "Customer")';
             $("#AddNewCustomer").dialog({
                 title: 'Add new customer',
@@ -49,10 +27,35 @@
 
             $("#AddNewCustomer").dialog('open');
             return false;
+        });*@
+
+        $('#SubmitDate').datepicker({
+            dateFormat: "dd/M/yy",
+            changeMonth: true,
+            changeYear: true,
+            yearRange: "-100:+0"
         });
 
         $('#AddCusBtn').click(function (e) {
             location.href = '@Url.Content("~/Customer/LoadAddNewCustomerView")';
+        });
+
+        $('#btnSubmit').click(function (e) {
+            if ($('#CustText').val() != '' || $('#ConsumerText').val() != '' || $('#SubmitDate').val() != '' || $('#AadharText').val() != '')
+            {
+              $.ajax(
+             {
+                 type: "POST", //HTTP POST Method
+                 url: "Customer/GetCustomers", // Controller/View 
+                 data: { //Passing data
+                     CustomerName: $("#CustText").val(), //Reading text box values using Jquery 
+                     ConsumerNumber: $("#ConsumerText").val(),
+                     SubmitDate: $("#SubmitDate").val(),
+                     Aadhar: $("#AadharText").val()
+                 }
+
+             });
+            }
         });
 
     });
@@ -68,17 +71,51 @@
           <div class="col-12">
               <div class="card">
                   <div class="card-body">
+                      <h4 class="card-title">Search Customers</h4>
+                      <h6 class="card-subtitle">Please input with any search item</h6>
+                      <div class="table-responsive m-t-40">
+                          
+                              <table id="SearchTable" class="table table-bordered " style="width:100% !important" cellspacing="0">
+                                  <tr>
+                                      <td><label class="control-label">Customer Name:</label></td>
+                                      <td><input type="text" class="form-control" id="CustText" /></td>
+                                      <td><label class="control-label">Consumer No :</label></td>
+                                      <td><input type="text" class="form-control" id="ConsumerText" /></td>
+                                  </tr>
+                                  <tr>
+                                      <td><label class="control-label">Date of Submission:</label></td>
+                                      <td><input type="text" class="form-control" id="SubmitDate" /></td>
+                                      <td><label class="control-label">Aadhar Number:</label></td>
+                                      <td><input type="text" class="form-control" id="AadharText" /></td>
+                                  </tr>
+                                  <tr>
+                                      <td colspan="4" style="text-align:center;">
+                                      <button type="submit" id="btnSubmit" class="btn btn-primary" style="padding:6px 30px; margin-right:16px;"> <i class="fa fa-check"></i> Search</button>
+                                      <button type="button" id="btnCancel" class="btn btn-inverse" style="padding:6px 30px;">Clear</button>
+                                      </td>
+                                  </tr>
+                              </table>
+                         
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <div class="row">
+          <div class="col-12">
+              <div class="card">
+                  <div class="card-body">
                       <h4 class="card-title">Data Export</h4>
                       <h6 class="card-subtitle">Export data to Copy, CSV, Excel, PDF & Print</h6>
                       <div class="table-responsive m-t-40">
-                          <table id="example23" class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" width="100%">
+                          <table id="example23" class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" style="width:100% !important">
                               <thead>
                                   <tr>
                                       <th>Customer Name</th>
                                       <th>Address</th>
                                       <th>Aadhar</th>
                                       <th>Mobile</th>
-                                      
+                                      <th>Actions</th>
 
                                   </tr>
                               </thead>
@@ -88,7 +125,7 @@
                                       <th>Address</th>
                                       <th>Aadhar</th>
                                       <th>Mobile</th>
-                                      
+                                      <th>Actions</th>
                                   </tr>
                               </tfoot>
                               <tbody>
@@ -99,7 +136,7 @@
                                           <td>@item.Street</td>
                                           <td>@item.Aadhar</td>
                                           <td>@item.MobileNumber</td>
-                                          
+                                          <td>@Html.ActionLink("Edit","EditCustomer",new { customerId=item.CustomerID})</td>
                                       </tr>
                                   }
                               </tbody>
@@ -107,7 +144,6 @@
                       </div>
                       <div class="row" style="padding-top:10px;">
                           <br />
-                          <button type="button" id="AddNewBtn" class="btn btn-primary m-b-10 m-l-5">Add New Customer</button>
                           <button type="button" id="AddCusBtn" class="btn btn-primary m-b-10 m-l-5">Add New Customer</button>
                       </div>   
                   </div>
@@ -119,9 +155,11 @@
 
    <div id="AddNewCustomer" style="display: none"></div>
 
-
+    <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
     <!-- All Jquery -->
     <script src="~/ElaAdmin-master/js/lib/jquery/jquery.min.js"></script>
+    <!--JQuery UI-->
+    <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
     <!-- Bootstrap tether Core JavaScript -->
     <script src="~/ElaAdmin-master/js/lib/bootstrap/js/popper.min.js"></script>
     <script src="~/ElaAdmin-master/js/lib/bootstrap/js/bootstrap.min.js"></script>
