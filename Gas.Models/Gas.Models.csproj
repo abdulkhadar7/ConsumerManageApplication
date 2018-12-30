@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="AddCustomerModel.cs" />
     <Compile Include="CustomerModel.cs" />
+    <Compile Include="CustomerSearchModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
