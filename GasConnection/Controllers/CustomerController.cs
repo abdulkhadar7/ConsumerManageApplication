@@ -23,13 +23,13 @@ namespace GasConnection.Controllers
             return RedirectToAction("GetCustomers", "Customer");
         }
 
-        [HttpGet]
-        public ActionResult GetCustomers()
+        [HttpPost]
+        public ActionResult GetCustomers(CustomerSearchModel searchModel)
         {
             try
             {
                 _customerService = new CustomerService();
-                var list = _customerService.GetCustomers();
+                var list = _customerService.GetCustomers(searchModel);
                 return View("GetCustomers", list);
             }
             catch (Exception ex)
