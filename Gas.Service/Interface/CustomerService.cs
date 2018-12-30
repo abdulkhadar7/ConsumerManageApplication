@@ -17,12 +17,12 @@ namespace Gas.Service.Interface
             return status;
         }
 
-        public List<CustomerModel> GetCustomers()
+        public List<CustomerModel> GetCustomers(CustomerSearchModel searchModel)
         {
             try
             {
                 customerEntity = new CustomerEntity();
-                List<CustomerModel> list = customerEntity.GetCustomers();
+                List<CustomerModel> list = customerEntity.GetCustomers(searchModel);
                 return list;
             }
             catch (Exception ex)

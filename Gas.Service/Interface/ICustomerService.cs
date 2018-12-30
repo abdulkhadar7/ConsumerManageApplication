@@ -6,7 +6,7 @@ namespace Gas.Service.Interface
     public interface ICustomerService
     {
         bool AddNewCustomer(AddCustomerModel customerModel);
-        List<CustomerModel> GetCustomers();
+        List<CustomerModel> GetCustomers(CustomerSearchModel searchModel);
         int GetConnectionAmount();
     }
 }
