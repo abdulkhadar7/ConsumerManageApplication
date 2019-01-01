@@ -25,7 +25,9 @@
 
     <script src="~/ElaAdmin-master/js/lib/jquery/jquery.min.js" type="text/javascript"></script>
     @*<script src="~/Scripts/jquery-3.3.1.js" type="text/javascript"></script>*@
+    <script src="~/Scripts/jquery.redirect.js" type="text/javascript"></script>
     <script src="~/Scripts/jquery-ui-1.12.1.js" type="text/javascript"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js" type="text/javascript"></script>
     @*<script src="~/Scripts/bootstrap.min.js" type="text/javascript"></script>*@
     @*<script src="~/Scripts/jquery.validate.unobtrusive.js" type="text/javascript"></script>*@
     <script src="~/ElaAdmin-master/js/lib/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
@@ -70,7 +72,10 @@
     
     <script type="text/javascript">
         $(document).ready(function () {
-
+            $('#CustomerLink').click(function (e) {
+                @*document.location = '@Url.Action("GetCustomers", "Customer",new { CustomerName = "", ConsumerNumber = 0, SubmitDate = "", Aadhar =""})';*@
+                $.redirect("/Customer/GetCustomers",{ CustomerName : "", ConsumerNumber : 0, SubmitDate : "", Aadhar :""},"POST");
+            });
         });
     </script>
 
@@ -149,7 +154,8 @@
                         </li>
                         <li class="nav-label">Customer</li>                            
                         <li>
-                            <a class="has-default" href="#" aria-expanded="false"><i class="fa fa-user"></i><span class="hide-menu">Customer</span> </a>
+                            <a class="has-default" id="CustomerLink" aria-expanded="false"><i class="fa fa-user"></i><span class="hide-menu">Customer</span> </a>
+                             @*@Ajax.ActionLink("GetCustomers", "Customer", new { CustomerName = "", ConsumerNumber = 0, SubmitDate = "", Aadhar = "" }, new AjaxOptions {HttpMethod="POST" });*@
                         </li>
 
                         <li>

@@ -21,7 +21,7 @@ namespace Gas.Service.Interface
         {
             try
             {
-                customerEntity = new CustomerEntity();
+                customerEntity = new CustomerEntity();                
                 List<CustomerModel> list = customerEntity.GetCustomers(searchModel);
                 return list;
             }
