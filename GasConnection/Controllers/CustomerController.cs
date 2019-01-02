@@ -21,29 +21,9 @@ namespace GasConnection.Controllers
             _customerService = new CustomerService();
             bool status = _customerService.AddNewCustomer(CustomerInput);
             return RedirectToAction("GetCustomers", "Customer");
-        }
+        }             
 
-        [HttpPost]
-        public ActionResult GetCustomers(CustomerSearchModel searchModel)
-        {
-            try
-            {
-                _customerService = new CustomerService();
-                var list = _customerService.GetCustomers(searchModel);
-                return View("GetCustomers", list);
-            }
-            catch (Exception ex)
-            {
-
-                throw;
-            }
-        }
-
-        [HttpGet]
-        public ActionResult LoadAddNewCustomer()
-        {
-            return PartialView("_LoadAddNewCustomer");
-        }
+       
 
         [HttpGet]
         public ActionResult LoadAddNewCustomerView()
@@ -52,5 +32,25 @@ namespace GasConnection.Controllers
             ViewBag.ConnectionAmount = _customerService.GetConnectionAmount();
             return View("LoadAddNewCustomer");
         }
+
+        [HttpGet]
+        public ActionResult GetCustomers()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult GetCustomerList(CustomerSearchModel searchmodel)
+        {
+            _customerService = new CustomerService();
+            var list = _customerService.GetCustomers(searchmodel);
+            return PartialView("_GetCustomers", list);
+        }
+
+        public ActionResult GetCustomerById(int customerId)
+        {
+            return null;
+        }
+        
     }
 }

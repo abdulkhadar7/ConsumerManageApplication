@@ -817,6 +817,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\SweetAlert.js" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Web.config" />
     <Content Include="Views\Shared\_layoneout.cshtml" />
@@ -960,9 +961,11 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
-    <Content Include="Views\Customer\GetCustomers.cshtml" />
-    <Content Include="Views\Customer\_LoadAddNewCustomer.cshtml" />
     <Content Include="Views\Customer\LoadAddNewCustomer.cshtml" />
+    <Content Include="Views\Customer\TestCustomer.cshtml" />
+    <Content Include="Views\Customer\_testCustomer.cshtml" />
+    <Content Include="Views\Customer\GetCustomers.cshtml" />
+    <Content Include="Views\Customer\_GetCustomers.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

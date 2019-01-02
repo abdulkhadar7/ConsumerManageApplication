@@ -39,6 +39,21 @@ namespace Gas.Service.Interface
                 customerEntity = new CustomerEntity();
                 return customerEntity.GetConnectionAmount();
             }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
+        public ViewCustomerModel GetCustomerById(int customerId)
+        {
+            try
+            {
+                customerEntity = new CustomerEntity();
+                var customerDetail = customerEntity.GetCustomerById(customerId);
+                return customerDetail;
+            }
             catch (Exception)
             {
 

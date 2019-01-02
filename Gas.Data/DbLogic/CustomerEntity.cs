@@ -57,6 +57,41 @@ namespace Gas.Data.DbLogic
             
         }
 
+        public ViewCustomerModel GetCustomerById(int customerId)
+        {
+            try
+            {
+                using (_dbContext = new GasEntity())
+                {
+                    ViewCustomerModel retModel = new ViewCustomerModel();
+
+                    var cust = _dbContext.Customers.FirstOrDefault(s => s.CustomerID == customerId);
+                    retModel.customer = new CustomerModel
+                    {
+                        Aadhar=cust.Aadhar,
+                        City=cust.City,
+                        ConsumerNo=cust.ConsumerNo,
+                        CreatedOn=cust.CreatedOn,
+                        CustomerID=cust.CustomerID,
+                        DOB=cust.DOB,
+                        FirstName=cust.FirstName,
+                        LastName=cust.LastName,
+                        Gender=cust.Gender,
+                        MobileNumber=cust.MobileNumber,
+                        PostCode=cust.PostCode,
+                        State=cust.State,
+                        Street=cust.Street
+                    };
+                    var paydetail=_dbContext.PaymentDetails.Where()
+                }
+            }
+            catch (Exception ex )
+            {
+
+                throw;
+            }
+        }
+
         public List<CustomerModel> GetCustomers(CustomerSearchModel searchModel)
         {
             try

@@ -1,17 +1,14 @@
-namespace Gas.Data
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Gas.Models
 {
-    using System;
-    using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;
-    using System.Data.Entity.Spatial;
-
-    [Table("Payment")]
-    public partial class Payment
+    public class PaymentModel
     {
-        [Key]
         public int PaymentID { get; set; }
-
         public int CustomerID { get; set; }
         public decimal? AdvanceAmount { get; set; }
         public decimal? InstallmentAmount { get; set; }
@@ -26,6 +23,6 @@ namespace Gas.Data
         public DateTime? CreatedOn { get; set; }
 
         public DateTime? ModifiedOn { get; set; }
-        
     }
+   
 }

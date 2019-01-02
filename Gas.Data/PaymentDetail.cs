@@ -5,7 +5,7 @@ namespace Gas.Data
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
-
+    [Table("PaymentDetails")]
     public partial class PaymentDetail
     {
         [Key]
@@ -26,5 +26,6 @@ namespace Gas.Data
         public DateTime? CreatedOn { get; set; }
 
         public DateTime? ModifiedOn { get; set; }
+        public int InstallmentNo { get; set; }
     }
 }

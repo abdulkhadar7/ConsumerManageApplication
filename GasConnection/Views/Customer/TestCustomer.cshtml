@@ -1,4 +1,5 @@
-﻿@{
+﻿
+@{
     ViewBag.Title = "GetCustomers";
 }
 <script src="~/Scripts/SweetAlert.js" type="text/javascript"></script>
@@ -8,7 +9,7 @@
         function GetData()
         {
             $.ajax({
-                url: '@Url.Action("GetCustomerList", "Customer")',
+                url: '@Url.Action("testPartial", "Customer")',
                 data: { //Passing data
                     CustomerName: $("#CustText").val(), //Reading text box values using Jquery
                     ConsumerNumber: $("#ConsumerText").val(),
@@ -23,7 +24,7 @@
                 }
             });
         }
-
+       
         $('#SubmitDate').datepicker({
             dateFormat: "dd/M/yy",
             changeMonth: true,
@@ -38,9 +39,9 @@
         $('#btnSubmit').click(function (e) {
             if ($('#CustText').val() != '' || $('#ConsumerText').val() != '' || $('#SubmitDate').val() != '' || $('#AadharText').val() != '')
             {
-
+            
                 $.ajax({
-                    url: '@Url.Action("GetCustomerList", "Customer")',
+                    url: '@Url.Action("testPartial", "Customer")',
                     data: { //Passing data
                                 CustomerName: $("#CustText").val(), //Reading text box values using Jquery
                                 ConsumerNumber: $("#ConsumerText").val(),
@@ -111,9 +112,9 @@
             </div>
         </div>
     </div>
-    <div id="divPartialView" class="row">
-        @Html.Partial("_GetCustomers", new List<Gas.Models.CustomerModel>());
-    </div>
+   <div id="divPartialView" class="row">
+       @Html.Partial("_testCustomer", new List<Gas.Models.CustomerModel>());
+   </div>
 
 </div>
 

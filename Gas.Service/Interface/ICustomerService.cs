@@ -8,5 +8,6 @@ namespace Gas.Service.Interface
         bool AddNewCustomer(AddCustomerModel customerModel);
         List<CustomerModel> GetCustomers(CustomerSearchModel searchModel);
         int GetConnectionAmount();
+        ViewCustomerModel GetCustomerById(int customerId);
     }
 }
