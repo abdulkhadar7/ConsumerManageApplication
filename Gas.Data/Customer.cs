@@ -49,6 +49,6 @@ namespace Gas.Data
         public DateTime? CreatedOn { get; set; }
 
         public DateTime? ModifiedOn { get; set; }
-        public int ConsumerNo { get; set; }
+        public int? ConsumerNo { get; set; } = 0;
     }
 }

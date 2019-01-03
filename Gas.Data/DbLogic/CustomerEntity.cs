@@ -82,13 +82,49 @@ namespace Gas.Data.DbLogic
                         State=cust.State,
                         Street=cust.Street
                     };
-                    var paydetail=_dbContext.PaymentDetails.Where()
+
+                    var payment = _dbContext.Payments.FirstOrDefault(s => s.CustomerID == cust.CustomerID);
+                    if (payment!=null)
+                    {
+                        InstalldetailModel model = new InstalldetailModel();
+                        model.PaymentId = payment.PaymentID;                      
+
+                        
+                        var paydetails = _dbContext.PaymentDetails.Where(s => s.PaymentID == payment.PaymentID).ToList();
+                        foreach (var item in paydetails)
+                        {
+                            if(item.InstallmentNo==0)
+                            {
+                                model.advance = item.PaymentAmount;
+                                model.advstatus = item.PaymentStatus;
+                            }
+                            else if(item.InstallmentNo==1)
+                            {
+                                model.Installment1 = item.PaymentAmount;
+                                model.insta1status = item.PaymentStatus;
+                            }
+                            else if (item.InstallmentNo == 2)
+                            {
+                                model.Installment2 = item.PaymentAmount;
+                                model.insta2status = item.PaymentStatus;
+                            }
+                            else if (item.InstallmentNo == 3)
+                            {
+                                model.Installment3 = item.PaymentAmount;
+                                model.insta3status = item.PaymentStatus;
+                            }
+                        }
+
+                        retModel.installmentModel = model;
+                    }
+                    
+                    return retModel;
                 }
             }
             catch (Exception ex )
             {
 
-                throw;
+                throw ex;
             }
         }
 

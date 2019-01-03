@@ -966,6 +966,7 @@
     <Content Include="Views\Customer\_testCustomer.cshtml" />
     <Content Include="Views\Customer\GetCustomers.cshtml" />
     <Content Include="Views\Customer\_GetCustomers.cshtml" />
+    <Content Include="Views\Customer\GetCustomerById.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

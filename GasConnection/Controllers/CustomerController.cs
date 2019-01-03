@@ -49,7 +49,9 @@ namespace GasConnection.Controllers
 
         public ActionResult GetCustomerById(int customerId)
         {
-            return null;
+            _customerService = new CustomerService();
+            var data = _customerService.GetCustomerById(customerId);
+            return View();
         }
         
     }
