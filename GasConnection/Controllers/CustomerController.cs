@@ -19,6 +19,9 @@ namespace GasConnection.Controllers
         public ActionResult AddNewCustomer(AddCustomerModel CustomerInput)
         {
             _customerService = new CustomerService();
+
+            //no data
+
             bool status = _customerService.AddNewCustomer(CustomerInput);
             return RedirectToAction("GetCustomers", "Customer");
         }             
