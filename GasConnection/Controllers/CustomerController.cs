@@ -19,15 +19,11 @@ namespace GasConnection.Controllers
         public ActionResult AddNewCustomer(AddCustomerModel CustomerInput)
         {
             _customerService = new CustomerService();
-
-            //no data
-
             bool status = _customerService.AddNewCustomer(CustomerInput);
             return RedirectToAction("GetCustomers", "Customer");
         }             
 
        
-
         [HttpGet]
         public ActionResult LoadAddNewCustomerView()
         {
@@ -49,12 +45,18 @@ namespace GasConnection.Controllers
             var list = _customerService.GetCustomers(searchmodel);
             return PartialView("_GetCustomers", list);
         }
-
+        [HttpGet]
         public ActionResult GetCustomerById(int customerId)
         {
             _customerService = new CustomerService();
             var data = _customerService.GetCustomerById(customerId);
-            return View();
+            return View("GetCustomerById",data);
+        }
+
+        public ActionResult UpdateCustomer(ViewCustomerModel input)
+        {
+            ViewBag.ConnectionAmount = _customerService.GetConnectionAmount();
+            return null;
         }
         
     }
