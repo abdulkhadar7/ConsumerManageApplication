@@ -9,8 +9,8 @@ namespace Gas.Models
     public class ViewCustomerModel
     {
         public CustomerModel customer { get; set; }
-        public PaymentModel payment { get; set; }
-        public List<PaymentDetailModel> paymentDetail { get; set; }
+        //public PaymentModel payment { get; set; }
+        //public List<PaymentDetailModel> paymentDetail { get; set; }
         public InstalldetailModel installmentModel { get; set; }
     }
 

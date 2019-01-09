@@ -57,6 +57,79 @@ namespace Gas.Data.DbLogic
             
         }
 
+        public bool UpdateCustomer(ViewCustomerModel input)
+        {
+            bool status = false;
+            try
+            {
+                using (_dbContext = new GasEntity())
+                {
+                    Customer C = _dbContext.Customers.FirstOrDefault(s => s.CustomerID == input.customer.CustomerID);
+                    C.Aadhar = input.customer.Aadhar;
+                    C.City = input.customer.City;
+                    C.ConsumerNo = input.customer.ConsumerNo;
+                    C.DOB = input.customer.DOB;
+                    C.FirstName = input.customer.FirstName;
+                    C.LastName = input.customer.LastName;
+                    C.MobileNumber = input.customer.MobileNumber;
+                    C.ModifiedOn = DateTime.Now;
+                    C.PostCode = input.customer.PostCode;
+                    C.State = input.customer.State;
+                    C.Street = input.customer.Street;
+                    _dbContext.SaveChanges();
+
+                    if(input.installmentModel.PaymentId>0)
+                    {
+                        SqlParameter[] parameter = new SqlParameter[]
+                        {
+                            new SqlParameter {ParameterName="@paymentId",Value=input.installmentModel.PaymentId },
+                            new SqlParameter {ParameterName="@CustomerId",Value=input.customer.CustomerID },
+                            new SqlParameter {ParameterName="@advAmount",Value=input.installmentModel.advance },
+                            new SqlParameter {ParameterName="@insta1Amount",Value=input.installmentModel.Installment1 },
+                            new SqlParameter {ParameterName="@insta2Amount",Value=input.installmentModel.Installment2},
+                            new SqlParameter {ParameterName="@insta3Amount",Value=input.installmentModel.Installment3},
+                            new SqlParameter {ParameterName="@advStatus",Value=input.installmentModel.advstatus},
+                            new SqlParameter {ParameterName="@inst1Status",Value =input.installmentModel.insta1status},
+                            new SqlParameter {ParameterName="@inst2Status",Value =input.installmentModel.insta2status},
+                            new SqlParameter {ParameterName="@inst3Status",Value =input.installmentModel.insta3status},
+                            new SqlParameter {ParameterName="@mode",Value="UPDATE" }
+                        };
+                        int id = _dbContext.Database.SqlQuery<int>("exec UpdatePaymentInfo @paymentId,@CustomerId,@advAmount,"+
+                            "@insta1Amount,@insta2Amount,@insta3Amount,@advStatus,@inst1Status,@inst2Status,@inst3Status,@mode", parameter).FirstOrDefault();
+                        if (id > 0)
+                            status = true;
+                    }
+                    else
+                    {
+                        SqlParameter[] parameter = new SqlParameter[]
+                        {
+                            new SqlParameter {ParameterName="@paymentId",Value=input.installmentModel.PaymentId },
+                            new SqlParameter {ParameterName="@CustomerId",Value=input.customer.CustomerID },
+                            new SqlParameter {ParameterName="@advAmount",Value=input.installmentModel.advance },
+                            new SqlParameter {ParameterName="@insta1Amount",Value=input.installmentModel.Installment1 },
+                            new SqlParameter {ParameterName="@insta2Amount",Value=input.installmentModel.Installment2},
+                            new SqlParameter {ParameterName="@insta3Amount",Value=input.installmentModel.Installment3},
+                            new SqlParameter {ParameterName="@advStatus",Value=input.installmentModel.advstatus},
+                            new SqlParameter {ParameterName="@inst1Status",Value =input.installmentModel.insta1status},
+                            new SqlParameter {ParameterName="@inst2Status",Value =input.installmentModel.insta2status},
+                            new SqlParameter {ParameterName="@inst3Status",Value =input.installmentModel.insta3status},
+                            new SqlParameter {ParameterName="@mode",Value="CREATE" }
+                        };
+                        int id = _dbContext.Database.SqlQuery<int>("exec UpdatePaymentInfo @paymentId,@CustomerId,@advAmount," +
+                            "@insta1Amount,@insta2Amount,@insta3Amount,@advStatus,@inst1Status,@inst2Status,@inst3Status,@mode", parameter).FirstOrDefault();
+                        if (id > 0)
+                            status = true;
+                    }
+                }
+                return status;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
         public ViewCustomerModel GetCustomerById(int customerId)
         {
             try
@@ -115,6 +188,20 @@ namespace Gas.Data.DbLogic
                             }
                         }
 
+                        retModel.installmentModel = model;
+                    }
+                    else
+                    {
+                        InstalldetailModel model = new InstalldetailModel();
+                        model.advance = 0;
+                        model.advstatus = false;
+                        model.insta1status = false;
+                        model.insta2status = false;
+                        model.insta3status = false;
+                        model.Installment1 = 0;
+                        model.Installment2 = 0;
+                        model.Installment3 = 0;
+                        model.PaymentId = 0;
                         retModel.installmentModel = model;
                     }
                     

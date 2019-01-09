@@ -48,14 +48,17 @@ namespace GasConnection.Controllers
         [HttpGet]
         public ActionResult GetCustomerById(int customerId)
         {
+           
             _customerService = new CustomerService();
+            ViewBag.ConnectionAmount = _customerService.GetConnectionAmount();
             var data = _customerService.GetCustomerById(customerId);
             return View("GetCustomerById",data);
         }
-
+        [HttpPost]
         public ActionResult UpdateCustomer(ViewCustomerModel input)
         {
-            ViewBag.ConnectionAmount = _customerService.GetConnectionAmount();
+            _customerService = new CustomerService();
+            bool success = _customerService.UpdateCustomer(input);
             return null;
         }
         

@@ -60,5 +60,20 @@ namespace Gas.Service.Interface
                 throw;
             }
         }
+
+        public bool UpdateCustomer(ViewCustomerModel input)
+        {
+            try
+            {
+                customerEntity = new CustomerEntity();
+                bool status = customerEntity.UpdateCustomer(input);
+                return status;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }

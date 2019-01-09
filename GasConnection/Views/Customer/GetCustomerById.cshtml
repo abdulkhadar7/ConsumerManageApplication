@@ -2,6 +2,7 @@
 @{
     ViewBag.Title = "GetCustomerById";
 }
+<link href="~/Content/spinner.css" rel="stylesheet" type="text/css"/>
 <style type="text/css">
     .errmsg {
         color: red;
@@ -9,11 +10,12 @@
     .editmode{
         
     }
+
 </style>
 <script>
     $(document).ready(function () {
 
-        DisableText();  
+        DisableText();
 
         var ConnectionAmount = parseInt(@ViewBag.ConnectionAmount);
 
@@ -26,8 +28,10 @@
             $('#UpdateForm input[type="datetime"]').prop("disabled", true);
             $('#UpdateForm input[type="number"]').prop("disabled", true);
             $('#customer_Gender').prop("disabled", true);
+            $('#UpdateForm input[type="checkbox"]').prop("disabled", true);
         }
 
+       
         $('#customer_Aadhar').on('keypress change', function (e) {
             if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
                 //display error message
@@ -85,27 +89,92 @@
 
         });
 
-      
-        $('#UpdateForm').submit(function () {
+        
+
+        //$('#UpdateForm').submit(function () {
+        $('#btnSubmit').click(function(){
             if ($('#customer_FirstName').val() == "" || $('#customer_LastName').val() == "" || $('#customer_Gender').val() == "" || $('#customer_DOB').val() == "" || $('#customer_Aadhar').val() == "" ||
-                $('#customer_MobileNumber').val() == "" || $('#customer_Street').val() == "" || $('#customer_City').val() == "" || $('#customer_State').val() == "" || $('#customer_PostCode').val() == "") {
+                $('#customer_MobileNumber').val() == "" || $('#customer_Street').val() == "" || $('#customer_City').val() == "" || $('#customer_State').val() == "" || $('#customer_PostCode').val() == "")
+            {
                 //$("#ErrorFooter").html("Required Fields are missing").show().fadeOut(2750);
                 swal("Alert", "Required Fields Can't be Blank", "error");
-                
+
                 return false;
+            }
+            else{
+                
+                $('#loader-wrapper').show();
+
+                var advanceStatus=$('#installmentModel_advstatus_Value').is(':checked')?true:false;
+                var insta1Status=$('#installmentModel_insta1status_Value').is(':checked')?true:false;
+                var insta2Status=$('#installmentModel_insta2status_Value').is(':checked')?true:false;
+                var insta3Status=$('#installmentModel_insta3status_Value').is(':checked')?true:false;
+
+
+                var CustomerModel={
+                    CustomerID:$('#@Html.IdFor(m=>m.customer.CustomerID)').val(),
+                    FirstName:$('#@Html.IdFor(m=>m.customer.FirstName)').val(),
+                    LastName:$('#@Html.IdFor(m=>m.customer.LastName)').val(),
+                    DOB:$('#@Html.IdFor(m=>m.customer.DOB)').val(),
+                    Gender:$('#@Html.IdFor(m=>m.customer.Gender)').val(),
+                    Aadhar:$('#@Html.IdFor(m=>m.customer.Aadhar)').val(),
+                    Street:$('#@Html.IdFor(m=>m.customer.Street)').val(),
+                    City:$('#@Html.IdFor(m=>m.customer.City)').val(),
+                    PostCode:$('#@Html.IdFor(m=>m.customer.PostCode)').val(),
+                    State:$('#@Html.IdFor(m=>m.customer.State)').val(),
+                    MobileNumber:$('#@Html.IdFor(m=>m.customer.MobileNumber)').val(),
+                    CreatedOn:$('#@Html.IdFor(m=>m.customer.CreatedOn)').val(),
+                    ConsumerNo:$('#@Html.IdFor(m=>m.customer.ConsumerNo)').val()
+                }
+
+                var InstalldetailModel={
+                    PaymentId:$('#@Html.IdFor(m=>m.installmentModel.PaymentId)').val(),
+                    advance:$('#@Html.IdFor(m=>m.installmentModel.advance)').val(),
+                    Installment1:$('#@Html.IdFor(m=>m.installmentModel.Installment1)').val(),
+                    Installment2:$('#@Html.IdFor(m=>m.installmentModel.Installment2)').val(),
+                    Installment3:$('#@Html.IdFor(m=>m.installmentModel.Installment3)').val(),
+                    insta1status:insta1Status,
+                    insta2status:insta2Status,
+                    insta3status:insta3Status,
+                    advstatus:advanceStatus
+                }
+
+                var input={
+                    "customer":CustomerModel,
+                    "installmentModel":InstalldetailModel
+                }
+               
+
+                $.ajax({
+                    type: "POST",
+                    url: "/Customer/UpdateCustomer",
+                    data: input,
+                    datatype: "json",
+                    cache: false,
+                    success: function (data) {
+                        alert();
+                        swal("Success", "Customer Details Updated Successfully", "success");
+                    },
+                    error: function (xhr) {
+                        alert('No Valid Data');
+                    }
+                });
+
+
             }
         });
 
+        
         $('#btnCancel').click(function (e) {
             location.href = '@Url.Content("~/Customer/GetCustomers/")';
         });
 
 
-        $('#installmentModel_AdvanceAmount').focusout(function () {
+        $('#installmentModel_advance').focusout(function () {
             var advanceAmount = $(this).val();
-            if ((parseInt(ConnectionAmount) - parseInt($('#installmentModel_AdvanceAmount').val())) > 0)
+            if ((parseInt(ConnectionAmount) - parseInt($('#installmentModel_advance').val())) > 0)
             {
-                var instaAmount = ((parseInt(ConnectionAmount) - parseInt($('#installmentModel_AdvanceAmount').val())) / 3).toFixed();
+                var instaAmount = ((parseInt(ConnectionAmount) - parseInt($('#installmentModel_advance').val())) / 3).toFixed();
                 $('#installmentModel_Installment1').val(instaAmount);
                 $('#installmentModel_Installment2').val(instaAmount);
                 $('#installmentModel_Installment3').val(instaAmount);
@@ -121,26 +190,27 @@
         });
 
         $('#EditButton').click(function(){
-            $('#EditButton').css({'display':'none'}); 
+            $('#EditButton').css({'display':'none'});
             $('#btnSubmit').show();
             $('#UpdateForm input[type="text"]').prop("disabled", false);
             $('#UpdateForm input[type="datetime"]').prop("disabled", false);
             $('#UpdateForm input[type="number"]').prop("disabled", false);
             $('#customer_Gender').prop("disabled", false);
+            $('#UpdateForm input[type="checkbox"]').prop("disabled", false);
         });
 
     });
 </script>
 <div class="card card-outline-primary" style="width:100%;">
-    @using (Html.BeginForm("AddNewCustomer", "Customer", FormMethod.Post, new { id = "UpdateForm" }))
-    {
-
+    @*@using (Html.BeginForm("UpdateCustomer", "Customer", FormMethod.Post, new { id = "UpdateForm" }))
+   {*@
+    
 
         <div class="card-header">
             <h4 class="m-b-0 text-white">Client Information</h4>
         </div>
         <div class="card-body">
-            <form action="#">
+            <form action="" id="UpdateForm" method="post">
                 <div class="form-body">
                     <h3 class="card-title m-t-15">Person Info</h3>
                     <hr>
@@ -299,6 +369,8 @@
                                 @Html.CheckBoxFor(s => s.installmentModel.insta3status.Value)                              
                                 <label>Installment 3</label>
                                 @Html.EditorFor(s => s.installmentModel.Installment3, new { htmlAttributes = new { @class = "form-control numbval" } })
+                                @Html.HiddenFor(s=>s.installmentModel.PaymentId)
+                                @Html.HiddenFor(s=>s.customer.CustomerID)
                             </div>
                         </div>
 
@@ -315,7 +387,11 @@
 
             </form>
         </div>
+        
+    <div id="loader-wrapper" style="display:none;">
+          <div id="loader"></div>
+        </div>
 
-    }
-</div>
-
+        @*}*@
+    
+    </div>
