@@ -152,8 +152,15 @@
                     datatype: "json",
                     cache: false,
                     success: function (data) {
-                        alert();
-                        swal("Success", "Customer Details Updated Successfully", "success");
+                        $('#loader-wrapper').hide();
+                        if(data.status=="Success")
+                        {
+                            swal("Success", "Customer Details Updated Successfully", "success").then(function() {
+                                window.location = "/Customer/GetCustomers"});                                                      
+                        }
+                        else{
+                            swal("Alert", "Update Failed", "error");
+                        }
                     },
                     error: function (xhr) {
                         alert('No Valid Data');
@@ -210,7 +217,7 @@
             <h4 class="m-b-0 text-white">Client Information</h4>
         </div>
         <div class="card-body">
-            <form action="" id="UpdateForm" method="post">
+            <form action="" id="UpdateForm" method="">
                 <div class="form-body">
                     <h3 class="card-title m-t-15">Person Info</h3>
                     <hr>
@@ -378,7 +385,7 @@
 
                 </div>
                 <div class="form-actions">
-                    <button type="submit" id="btnSubmit" class="btn btn-success" style="padding:6px 30px; display:none;"> <i  class="fa fa-check"></i> Save Changes</button>
+                    <button type="button" id="btnSubmit" class="btn btn-success" style="padding:6px 30px; display:none;"> <i  class="fa fa-check"></i> Save Changes</button>
                     <button type="button" id="EditButton" class="btn btn-info" style="padding:6px 30px;"> Edit </button>
                     <button type="button" id="btnCancel" class="btn btn-inverse" style="padding:6px 30px;">Cancel</button>
                     <span id="ErrorFooter" class="errmsg"></span>

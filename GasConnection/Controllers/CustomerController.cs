@@ -59,7 +59,10 @@ namespace GasConnection.Controllers
         {
             _customerService = new CustomerService();
             bool success = _customerService.UpdateCustomer(input);
-            return null;
+            if(success)
+                return Json(new { status = "Success", message = "Success" });
+            else
+                return Json(new { status = "Failed", message = "Failed" });
         }
         
     }
