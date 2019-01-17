@@ -9,8 +9,6 @@ namespace Gas.Models
     public class ViewCustomerModel
     {
         public CustomerModel customer { get; set; }
-        //public PaymentModel payment { get; set; }
-        //public List<PaymentDetailModel> paymentDetail { get; set; }
         public InstalldetailModel installmentModel { get; set; }
     }
 
@@ -25,6 +23,7 @@ namespace Gas.Models
         public bool? insta2status { get; set; }
         public bool? insta3status { get; set; }
         public bool? advstatus { get; set; }
+        public bool isDateUpdate { get; set; }
     }
 
 }

@@ -92,10 +92,12 @@ namespace Gas.Data.DbLogic
                             new SqlParameter {ParameterName="@inst1Status",Value =input.installmentModel.insta1status},
                             new SqlParameter {ParameterName="@inst2Status",Value =input.installmentModel.insta2status},
                             new SqlParameter {ParameterName="@inst3Status",Value =input.installmentModel.insta3status},
-                            new SqlParameter {ParameterName="@mode",Value="UPDATE" }
+                            new SqlParameter {ParameterName="@mode",Value="UPDATE" },
+                            new SqlParameter {ParameterName="@IsUpdate",Value=input.installmentModel.isDateUpdate }
+                            
                         };
                         int id = _dbContext.Database.SqlQuery<int>("exec UpdatePaymentInfo @paymentId,@CustomerId,@advAmount,"+
-                            "@insta1Amount,@insta2Amount,@insta3Amount,@advStatus,@inst1Status,@inst2Status,@inst3Status,@mode", parameter).FirstOrDefault();
+                            "@insta1Amount,@insta2Amount,@insta3Amount,@advStatus,@inst1Status,@inst2Status,@inst3Status,@mode,@IsUpdate", parameter).FirstOrDefault();
                         if (id > 0)
                             status = true;
                     }
@@ -113,10 +115,11 @@ namespace Gas.Data.DbLogic
                             new SqlParameter {ParameterName="@inst1Status",Value =input.installmentModel.insta1status},
                             new SqlParameter {ParameterName="@inst2Status",Value =input.installmentModel.insta2status},
                             new SqlParameter {ParameterName="@inst3Status",Value =input.installmentModel.insta3status},
-                            new SqlParameter {ParameterName="@mode",Value="CREATE" }
+                            new SqlParameter {ParameterName="@mode",Value="CREATE" },
+                            new SqlParameter {ParameterName="@IsUpdate",Value=DBNull.Value }
                         };
                         int id = _dbContext.Database.SqlQuery<int>("exec UpdatePaymentInfo @paymentId,@CustomerId,@advAmount," +
-                            "@insta1Amount,@insta2Amount,@insta3Amount,@advStatus,@inst1Status,@inst2Status,@inst3Status,@mode", parameter).FirstOrDefault();
+                            "@insta1Amount,@insta2Amount,@insta3Amount,@advStatus,@inst1Status,@inst2Status,@inst3Status,@mode,@IsUpdate", parameter).FirstOrDefault();
                         if (id > 0)
                             status = true;
                     }
@@ -160,7 +163,8 @@ namespace Gas.Data.DbLogic
                     if (payment!=null)
                     {
                         InstalldetailModel model = new InstalldetailModel();
-                        model.PaymentId = payment.PaymentID;                      
+                        model.PaymentId = payment.PaymentID;
+                        model.isDateUpdate = false;                      
 
                         
                         var paydetails = _dbContext.PaymentDetails.Where(s => s.PaymentID == payment.PaymentID).ToList();
@@ -193,6 +197,7 @@ namespace Gas.Data.DbLogic
                     else
                     {
                         InstalldetailModel model = new InstalldetailModel();
+                        model.isDateUpdate = false;
                         model.advance = 0;
                         model.advstatus = false;
                         model.insta1status = false;

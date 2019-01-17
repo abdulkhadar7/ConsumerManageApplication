@@ -43,7 +43,7 @@
                 return value.replace(/\W/gi, '').replace(/(.{4})/g, '$1 ');
             });
         });
-
+        +
         $('#customer_Aadhar').focusout(function () {
             aadhar = $(this).val();
             if (aadhar.length != 15) {
@@ -109,7 +109,7 @@
                 var insta1Status=$('#installmentModel_insta1status_Value').is(':checked')?true:false;
                 var insta2Status=$('#installmentModel_insta2status_Value').is(':checked')?true:false;
                 var insta3Status=$('#installmentModel_insta3status_Value').is(':checked')?true:false;
-
+                var IsDateUpdate=$('#installmentModel_isDateUpdate').is(':checked')?true:false;
 
                 var CustomerModel={
                     CustomerID:$('#@Html.IdFor(m=>m.customer.CustomerID)').val(),
@@ -136,7 +136,8 @@
                     insta1status:insta1Status,
                     insta2status:insta2Status,
                     insta3status:insta3Status,
-                    advstatus:advanceStatus
+                    advstatus:advanceStatus,
+                    isDateUpdate:IsDateUpdate
                 }
 
                 var input={
@@ -343,9 +344,9 @@
                         </div>
                         <!--/span-->
                     </div>
-
-
+                    
                     <h3 class="box-title m-t-40">Payment Info</h3>
+                    <hr>
                     <div class="row">
                         <div class="col-md-3">
                             <div class="form-group">
@@ -383,6 +384,9 @@
 
                     </div>
 
+                </div>
+                <div>
+                @Html.CheckBoxFor(s => s.installmentModel.isDateUpdate)   <label>Update Installment Date</label> 
                 </div>
                 <div class="form-actions">
                     <button type="button" id="btnSubmit" class="btn btn-success" style="padding:6px 30px; display:none;"> <i  class="fa fa-check"></i> Save Changes</button>

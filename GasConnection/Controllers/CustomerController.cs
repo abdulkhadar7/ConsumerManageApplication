@@ -18,18 +18,34 @@ namespace GasConnection.Controllers
         [HttpPost]
         public ActionResult AddNewCustomer(AddCustomerModel CustomerInput)
         {
-            _customerService = new CustomerService();
-            bool status = _customerService.AddNewCustomer(CustomerInput);
-            return RedirectToAction("GetCustomers", "Customer");
+            try
+            {
+                _customerService = new CustomerService();
+                bool status = _customerService.AddNewCustomer(CustomerInput);
+                return RedirectToAction("GetCustomers", "Customer");
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
         }             
 
        
         [HttpGet]
         public ActionResult LoadAddNewCustomerView()
         {
-            _customerService = new CustomerService();
-            ViewBag.ConnectionAmount = _customerService.GetConnectionAmount();
-            return View("LoadAddNewCustomer");
+            try
+            {
+                _customerService = new CustomerService();
+                ViewBag.ConnectionAmount = _customerService.GetConnectionAmount();
+                return View("LoadAddNewCustomer");
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
         }
 
         [HttpGet]
@@ -41,28 +57,52 @@ namespace GasConnection.Controllers
         [HttpPost]
         public ActionResult GetCustomerList(CustomerSearchModel searchmodel)
         {
-            _customerService = new CustomerService();
-            var list = _customerService.GetCustomers(searchmodel);
-            return PartialView("_GetCustomers", list);
+            try
+            {
+                _customerService = new CustomerService();
+                var list = _customerService.GetCustomers(searchmodel);
+                return PartialView("_GetCustomers", list);
+            }
+            catch (Exception ex) 
+            {
+
+                throw ex;
+            }
         }
         [HttpGet]
         public ActionResult GetCustomerById(int customerId)
         {
-           
-            _customerService = new CustomerService();
-            ViewBag.ConnectionAmount = _customerService.GetConnectionAmount();
-            var data = _customerService.GetCustomerById(customerId);
-            return View("GetCustomerById",data);
+
+            try
+            {
+                _customerService = new CustomerService();
+                ViewBag.ConnectionAmount = _customerService.GetConnectionAmount();
+                var data = _customerService.GetCustomerById(customerId);
+                return View("GetCustomerById", data);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
         }
         [HttpPost]
         public ActionResult UpdateCustomer(ViewCustomerModel input)
         {
-            _customerService = new CustomerService();
-            bool success = _customerService.UpdateCustomer(input);
-            if(success)
-                return Json(new { status = "Success", message = "Success" });
-            else
-                return Json(new { status = "Failed", message = "Failed" });
+            try
+            {
+                _customerService = new CustomerService();
+                bool success = _customerService.UpdateCustomer(input);
+                if (success)
+                    return Json(new { status = "Success", message = "Success" });
+                else
+                    return Json(new { status = "Failed", message = "Failed" });
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
         }
         
     }

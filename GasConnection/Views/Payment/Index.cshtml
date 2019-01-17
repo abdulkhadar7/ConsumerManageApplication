@@ -1,0 +1,56 @@
+﻿
+@{
+    ViewBag.Title = "Payment Home";
+}
+
+<script>
+    $(document).ready(function () {
+
+    });
+</script>
+<div class="container-fluid">
+
+    <div class="preloader">
+        <svg class="circular" viewBox="25 25 50 50">
+            <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10" />
+        </svg>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Search Customers</h4>
+                    <h6 class="card-subtitle">Please input with any search item</h6>
+                    <div class="table-responsive m-t-40">
+
+                        <table id="SearchTable" class="table table-bordered " style="width:100% !important" cellspacing="0">
+                            <tr>
+                                <td><label class="control-label">Customer Name:</label></td>
+                                <td><input type="text" class="form-control" id="CustText" /></td>
+                                <td><label class="control-label">Consumer No :</label></td>
+                                <td><input type="text" class="form-control" id="ConsumerText" /></td>
+                            </tr>
+                            <tr>
+                                <td><label class="control-label">Date of Submission:</label></td>
+                                <td><input type="text" class="form-control" id="SubmitDate" /></td>
+                                <td><label class="control-label">Aadhar Number:</label></td>
+                                <td><input type="text" class="form-control" id="AadharText" /></td>
+                            </tr>
+                            <tr>
+                                <td colspan="34" style="text-align:center;">
+                                    <button type="submit" id="btnSubmit" class="btn btn-primary" style="padding:6px 30px; margin-right:16px;"> <i class="fa fa-check"></i> Search</button>
+                                    <button type="button" id="btnCancel" class="btn btn-inverse" style="padding:6px 30px;">Clear</button>
+                                </td>
+                            </tr>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="divPartialView" class="row">
+        @Html.Partial("_GetPayments", new List<Gas.Models.CustomerModel>());
+    </div>
+
+</div>

@@ -1,0 +1,31 @@
+﻿using Gas.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+
+namespace GasConnection.Controllers
+{
+    public class PaymentController : Controller
+    {
+        // GET: Payment
+        public ActionResult Index()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult GetPaymentList(CustomerSearchModel input)
+        {
+            try
+            {
+                return PartialView("_GetPayments");
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+    }
+}

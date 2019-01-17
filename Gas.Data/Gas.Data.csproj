@@ -53,6 +53,7 @@
   <ItemGroup>
     <Compile Include="Customer.cs" />
     <Compile Include="DbLogic\CustomerEntity.cs" />
+    <Compile Include="DbLogic\PaymentEntity.cs" />
     <Compile Include="GasEntity.cs" />
     <Compile Include="MessageLog.cs" />
     <Compile Include="MessageTemplate.cs" />
