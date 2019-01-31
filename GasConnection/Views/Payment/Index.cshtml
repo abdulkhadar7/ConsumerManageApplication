@@ -5,6 +5,85 @@
 
 <script>
     $(document).ready(function () {
+        GetData();
+        function GetData() {
+            $.ajax({
+                url: '@Url.Action("GetPaymentList", "Payment")',
+                data: { //Passing data
+                    CustomerName: $("#CustText").val(), //Reading text box values using Jquery
+                    ConsumerNumber: $("#ConsumerText").val(),
+                    SubmitDate: $("#SubmitDate").val()
+                },
+                cache: false,
+                type: "POST",
+                dataType: "html",
+                success: function (data, textStatus, XMLHttpRequest) {
+                    $("#divPartialView").html(data);
+                }
+            });
+        }
+
+        $('#SubmitDate').datepicker({
+            dateFormat: "dd/M/yy",
+            changeMonth: true,
+            changeYear: true,
+            yearRange: "-1:+0"
+        });
+
+        $('#btnSubmit').click(function (e) {
+            if ($('#CustText').val() != '' || $('#ConsumerText').val() != '' || $('#SubmitDate').val() != '') {
+
+                $.ajax({
+                    url: '@Url.Action("GetPaymentList", "Payment")',
+                    data: { //Passing data
+                        CustomerName: $("#CustText").val(), //Reading text box values using Jquery
+                        ConsumerNumber: $("#ConsumerText").val(),
+                        SubmitDate: $("#SubmitDate").val()
+                    },
+                    cache: false,
+                    type: "POST",
+                    dataType: "html",
+                    success: function (data, textStatus, XMLHttpRequest) {
+                        $("#divPartialView").html(data);
+                    }
+                });
+            }
+            else {
+                swal("Alert", "Please input atleast one search parameter", "error");
+            }
+        });
+
+        $('#btnCancel').click(function () {
+            $("#CustText").val('');
+            $("#ConsumerText").val('');
+            $("#SubmitDate").val('');
+           
+        });
+
+
+        $(".editDialog").on("click", function (e) {
+            var url = $(this).attr('href');
+           $("#dialog-edit").dialog({
+                title: 'Edit Client Detail',
+                autoOpen: false,
+                resizable: false,
+                height: 325,
+                width: 550,
+                show: { effect: 'drop', direction: "up" },
+                modal: true,
+                draggable: true,
+                open: function (event, ui) {
+                    $(this).load(url);
+
+                },
+                close: function (event, ui) {
+                    $(this).dialog('close');
+                }
+            });
+
+            $("#dialog-edit").dialog('open');
+            return false;
+        });
 
     });
 </script>
@@ -31,10 +110,11 @@
                                 <td><input type="text" class="form-control" id="ConsumerText" /></td>
                             </tr>
                             <tr>
-                                <td><label class="control-label">Date of Submission:</label></td>
-                                <td><input type="text" class="form-control" id="SubmitDate" /></td>
-                                <td><label class="control-label">Aadhar Number:</label></td>
-                                <td><input type="text" class="form-control" id="AadharText" /></td>
+                                <td ><label class="control-label">Date of Submission:</label></td>
+                                <td ><input type="text" class="form-control" id="SubmitDate" /></td>
+                                @*<td><label class="control-label">Aadhar Number:</label></td>
+                                <td><input type="text" class="form-control" id="AadharText" /></td>*@
+                                <td colspan="2"></td>
                             </tr>
                             <tr>
                                 <td colspan="34" style="text-align:center;">
@@ -50,7 +130,9 @@
         </div>
     </div>
     <div id="divPartialView" class="row">
-        @Html.Partial("_GetPayments", new List<Gas.Models.CustomerModel>());
+        @Html.Partial("_GetPayments", new List<Gas.Models.PaymentListingModel>());
     </div>
 
+</div>
+<div id="dialog-edit" style="display: none">
 </div>

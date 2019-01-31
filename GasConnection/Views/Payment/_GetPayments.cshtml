@@ -1,1 +1,74 @@
-﻿
+﻿@model List<Gas.Models.PaymentListingModel>
+
+<script>
+    $(document).ready(function () {
+
+    });
+</script>
+
+<div class="col-12">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">Customer Details</h4>
+            <div class="table-responsive m-t-40">
+                <table id="example23" class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" style="width:100% !important">
+                    <thead>
+                        <tr>
+                            <th>Customer Name</th>
+                            <th>Advance Amount</th>
+                            <th>Installment Amount</th>
+                            <th>Total Paid</th>
+                            <th>Total Pending</th>
+                            <th>Total Amount</th>
+                            <th>Last Updated</th>
+                            <th>Actions</th>
+
+
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <th>Customer Name</th>
+                            <th>Advance Amount</th>
+                            <th>Installment Amount</th>
+                            <th>Total Paid</th>
+                            <th>Total Pending</th>
+                            <th>Total Amount</th>
+                            <th>Last Updated</th>
+                            <th style="text-align:right;"></th>
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                        @if(Model.Count==0)
+                        {
+                            <tr>
+                                <td colspan="7" align="center" style="text-align:center;color:red;">No Records Found</td>
+                            </tr>
+                        }
+                        else
+                        {
+                            foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@item.CustomerName </td>
+                                    <td>@item.Advance</td>
+                                    <td>@item.InstallmentAmount</td>
+                                    <td>@item.TotalPaid</td>
+                                    <td>@item.TotalPending</td>
+                                    <td>@item.TotalAmount</td>
+                                    <td>@item.ModifiedOn.ToString("dd MMM yyyy")</td>
+                                    <td>@Html.ActionLink("Edit", "GetPaymentDetailsById", new { PaymentID = item.PaymentID }, new { @class = "editDialog" })</td>
+                                </tr>
+                            }
+                        }
+                       
+                    </tbody>
+                </table>
+            </div>
+            @*<div class="row" style="padding-top:10px;">
+                <br />
+                <button type="button" id="AddCusBtn" class="btn btn-primary m-b-10 m-l-5">Add New Customer</button>
+            </div>*@
+        </div>
+    </div>
+</div>

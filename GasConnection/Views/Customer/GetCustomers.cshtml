@@ -5,8 +5,7 @@
 <script>
     $(document).ready(function () {
         GetData();
-        function GetData()
-        {
+        function GetData() {
             $.ajax({
                 url: '@Url.Action("GetCustomerList", "Customer")',
                 data: { //Passing data
@@ -36,17 +35,16 @@
         });
 
         $('#btnSubmit').click(function (e) {
-            if ($('#CustText').val() != '' || $('#ConsumerText').val() != '' || $('#SubmitDate').val() != '' || $('#AadharText').val() != '')
-            {
+            if ($('#CustText').val() != '' || $('#ConsumerText').val() != '' || $('#SubmitDate').val() != '' || $('#AadharText').val() != '') {
 
                 $.ajax({
                     url: '@Url.Action("GetCustomerList", "Customer")',
                     data: { //Passing data
-                                CustomerName: $("#CustText").val(), //Reading text box values using Jquery
-                                ConsumerNumber: $("#ConsumerText").val(),
-                                SubmitDate: $("#SubmitDate").val(),
-                                Aadhar: $("#AadharText").val()
-                            },
+                        CustomerName: $("#CustText").val(), //Reading text box values using Jquery
+                        ConsumerNumber: $("#ConsumerText").val(),
+                        SubmitDate: $("#SubmitDate").val(),
+                        Aadhar: $("#AadharText").val()
+                    },
                     cache: false,
                     type: "POST",
                     dataType: "html",
@@ -55,8 +53,7 @@
                     }
                 });
             }
-            else
-            {
+            else {
                 swal("Alert", "Please input atleast one search parameter", "error");
             }
         });
@@ -87,16 +84,32 @@
 
                         <table id="SearchTable" class="table table-bordered " style="width:100% !important" cellspacing="0">
                             <tr>
-                                <td><label class="control-label">Customer Name:</label></td>
-                                <td><input type="text" class="form-control" id="CustText" /></td>
-                                <td><label class="control-label">Consumer No :</label></td>
-                                <td><input type="text" class="form-control" id="ConsumerText" /></td>
+                                <td>
+                                    <label class="control-label">Customer Name:</label>
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control" id="CustText" />
+                                </td>
+                                <td>
+                                    <label class="control-label">Consumer No :</label>
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control" id="ConsumerText" />
+                                </td>
                             </tr>
                             <tr>
-                                <td><label class="control-label">Date of Submission:</label></td>
-                                <td><input type="text" class="form-control" id="SubmitDate" /></td>
-                                <td><label class="control-label">Aadhar Number:</label></td>
-                                <td><input type="text" class="form-control" id="AadharText" /></td>
+                                <td>
+                                    <label class="control-label">Date of Submission:</label>
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control" id="SubmitDate" />
+                                </td>
+                                <td>
+                                    <label class="control-label">Aadhar Number:</label>
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control" id="AadharText" />
+                                </td>
                             </tr>
                             <tr>
                                 <td colspan="34" style="text-align:center;">
