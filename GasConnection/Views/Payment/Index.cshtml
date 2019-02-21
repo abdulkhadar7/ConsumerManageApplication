@@ -61,29 +61,7 @@
         });
 
 
-        $(".editDialog").on("click", function (e) {
-            var url = $(this).attr('href');
-           $("#dialog-edit").dialog({
-                title: 'Edit Client Detail',
-                autoOpen: false,
-                resizable: false,
-                height: 325,
-                width: 550,
-                show: { effect: 'drop', direction: "up" },
-                modal: true,
-                draggable: true,
-                open: function (event, ui) {
-                    $(this).load(url);
-
-                },
-                close: function (event, ui) {
-                    $(this).dialog('close');
-                }
-            });
-
-            $("#dialog-edit").dialog('open');
-            return false;
-        });
+       
 
     });
 </script>
@@ -136,3 +114,4 @@
 </div>
 <div id="dialog-edit" style="display: none">
 </div>
+

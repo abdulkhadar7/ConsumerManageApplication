@@ -1,0 +1,49 @@
+﻿@model List<Gas.Models.PaymentDetailModel>
+<div class="col-12">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">Payment Details</h4>
+            <div class="table-responsive m-t-40">
+                <table id="example23" class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" style="width:100% !important">
+                    <thead>
+                        <tr>
+                            <th>Installment No</th>                            
+                            <th>Installment Amount</th>
+                            <th>Due Date</th>
+                            <th>Paid On</th>
+                            <th>Payment Status</th>
+                           
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach(var item in Model)
+                        {
+                            <tr>
+                                <td>@item.InstallmentNo</td>
+                                <td>@item.PaymentAmount</td>
+                                @if (item.DueDate == null || item.DueDate == DateTime.MinValue)
+                                {
+                                    @:<td>No date</td>
+                                }
+                                else
+                                {
+                                    @:<td>@item.DueDate.Value.ToString("dd MMM yyyy")</td>
+                                }
+                                @if (item.PaidOn == null || item.PaidOn == DateTime.MinValue)
+                                {
+                                    @:<td>Not Paid</td> 
+                                }
+                                else
+                                {
+                                  @:<td>@item.PaidOn.Value.ToString("dd MMM yyyy")</td>
+                                }
+                                
+                                <td>@item.PaymentStatus</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

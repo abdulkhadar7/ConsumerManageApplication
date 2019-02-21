@@ -2,7 +2,32 @@
 
 <script>
     $(document).ready(function () {
+        $(".editDialog").click(function (e) {
+          
+            var url = $(this).attr('href');
+            $("#dialog-edit").dialog({
+                title: 'Payment Details',
+                autoOpen: false,
+                resizable: false,
+                height: 450,
+                width: 850,
+                show: { effect: 'drop', direction: "up" },
+                modal: true,
+                draggable: false,
+                open: function (event, ui) {
+                    $(this).load(url);
 
+                },
+                close: function (event, ui) {
+                    $(this).dialog('close');
+                }
+            });
+
+            $("#dialog-edit").dialog('open');
+            return false;
+        });
+
+       
     });
 </script>
 

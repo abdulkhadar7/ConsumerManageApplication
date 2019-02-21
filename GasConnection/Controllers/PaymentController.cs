@@ -40,7 +40,7 @@ namespace GasConnection.Controllers
             {
                 _paymentService = new PaymentService();
                 var data = _paymentService.GetPaymentDetailsById(PaymentID);
-                return View();
+                return PartialView("_GetPaymentDetailsById",data);
             }
             catch (Exception ex)
             {
